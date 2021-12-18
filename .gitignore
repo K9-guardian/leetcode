@@ -1,0 +1,5 @@
+clojure/.cpcache
+
+rust/debug
+rust/target
+rust/Cargo.lock
