@@ -23,8 +23,7 @@ class Solution {
     }
 
     public static void main(String[] args) {
-        String s = "abcabcbb";
         Solution sc = new Solution();
-        System.out.println(sc.lengthOfLongestSubstring(s));
+        System.out.println(sc.lengthOfLongestSubstring("abcabcbb"));
     }
 }
