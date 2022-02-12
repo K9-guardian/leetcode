@@ -12,7 +12,6 @@ class Solution {
             while (i < nums.length - 2 && nums[i] <= 0) {
                 int start = i + 1, end = nums.length - 1;
                 while (start < end) {
-                    // System.out.printf("%d %d\n", start, end);
                     if (nums[start] + nums[end] == -1 * nums[i]) {
                         result.add(Arrays.asList(nums[i], nums[start], nums[end]));
                         start++;
