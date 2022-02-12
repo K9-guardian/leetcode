@@ -1,10 +1,10 @@
-import java.util.HashSet;
+import java.util.*;
 
 class Solution {
     public int lengthOfLongestSubstring(String s) {
         int start = 0, end = 0;
         int longestLength = 0;
-        HashSet<Character> set = new HashSet<>();
+        Set<Character> set = new HashSet<>();
 
         while (end != s.length()) {
             if (set.contains(s.charAt(end))) {

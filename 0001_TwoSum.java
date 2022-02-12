@@ -1,9 +1,8 @@
-import java.util.Arrays;
-import java.util.HashMap;
+import java.util.*;
 
 class Solution {
     public int[] twoSum(int[] nums, int target) {
-        HashMap<Integer, Integer> m = new HashMap<>();
+        Map<Integer, Integer> m = new HashMap<>();
         int[] result = null;
 
         for (int i = 0; i < nums.length; i++)
