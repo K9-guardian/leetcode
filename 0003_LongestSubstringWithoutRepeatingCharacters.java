@@ -16,7 +16,6 @@ class Solution {
                 end++;
                 longestLength = Math.max(longestLength, end - start);
             }
-            System.out.println(set);
         }
 
         return longestLength;
