@@ -5,7 +5,7 @@ import java.util.stream.Collectors;
 class Solution {
     Map<Character, Long> frequencies(String str) {
         return str.chars()
-                  .mapToObj(Character.class::cast)
+                  .mapToObj(x -> (char) x)
                   .collect(Collectors.groupingBy(Function.identity(), Collectors.counting()));
     }
 
