@@ -11,11 +11,11 @@ class Solution {
     }
 
     public List<List<String>> groupAnagrams(String[] strs) {
-        record Pair(Map<Character, Integer> key, String value) { }
+        record Pair<K, V>(K key, V value) { }
 
         return new ArrayList<>(
             Arrays.stream(strs)
-                  .map(s -> new Pair(frequencies(s), s))
+                  .map(s -> new Pair<Map<Character, Integer>, String>(frequencies(s), s))
                   .collect(HashMap<Map<Character, Integer>, List<String>>::new,
                            (map, pair) -> map.merge(pair.key(),
                                                     Arrays.asList(pair.value()),
