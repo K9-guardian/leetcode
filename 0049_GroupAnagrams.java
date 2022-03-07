@@ -1,18 +1,16 @@
 import java.util.*;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 
 class Solution {
-    Map<Character, Integer> frequencies(String str) {
-        Map<Character, Integer> freqs = new HashMap<>();
-
-        for (int i = 0; i < str.length(); i++)
-            freqs.merge(str.charAt(i), 1, Integer::sum);
-
-        return freqs;
+    Map<Character, Long> frequencies(String str) {
+        return str.chars()
+                  .mapToObj(Character.class::cast)
+                  .collect(Collectors.groupingBy(Function.identity(), Collectors.counting()));
     }
 
     public List<List<String>> groupAnagrams(String[] strs) {
-        return new ArrayList<>(
+        return new ArrayList<List<String>>(
             Arrays.stream(strs)
                   .collect(Collectors.groupingBy(this::frequencies))
                   .values());
