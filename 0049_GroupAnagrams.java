@@ -1,4 +1,5 @@
 import java.util.*;
+import java.util.stream.Collectors;
 
 class Solution {
     Map<Character, Integer> frequencies(String str) {
@@ -11,27 +12,9 @@ class Solution {
     }
 
     public List<List<String>> groupAnagrams(String[] strs) {
-        record Pair<K, V>(K key, V value) { }
-
         return new ArrayList<>(
             Arrays.stream(strs)
-                  .map(s -> new Pair<Map<Character, Integer>, String>(frequencies(s), s))
-                  .collect(HashMap<Map<Character, Integer>, List<String>>::new,
-                           (map, pair) -> map.merge(pair.key(),
-                                                    Arrays.asList(pair.value()),
-                                                    (arr, _arr) -> {
-                                                        List<String> tmp = new ArrayList<>(arr);
-                                                        tmp.add(pair.value());
-                                                        return tmp;
-                                                    }),
-                           (map1, map2) -> {
-                                for (var e : map2.entrySet())
-                                    map1.merge(e.getKey(), e.getValue(), (arr1, arr2) -> {
-                                        List<String> tmp = new ArrayList<>(arr1);
-                                        tmp.addAll(arr2);
-                                        return tmp;
-                                    });
-                           })
+                  .collect(Collectors.groupingBy(this::frequencies))
                   .values());
     }
 
