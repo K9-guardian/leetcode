@@ -30,7 +30,7 @@ class Solution {
                          }
                         );
 
-        return merged.toArray(new int[merged.size()][2]);
+        return merged.toArray(new int[merged.size()][]);
     }
 
     public static void main(String[] args) {
