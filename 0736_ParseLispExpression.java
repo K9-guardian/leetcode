@@ -5,13 +5,37 @@ import java.util.stream.*;
 class Solution {
     record Pair<F, S> (F fst, S snd) { }
 
-    // TODO: Implement eval in the records themselves.
-    sealed interface Expr permits IntExpr, VarExpr, AddExpr, MultExpr, LetExpr { }
-    record IntExpr(int i) implements Expr { }
-    record VarExpr(String str) implements Expr { }
-    record AddExpr(Expr x, Expr y) implements Expr { }
-    record MultExpr(Expr x, Expr y) implements Expr { }
-    record LetExpr(List<Pair<String, Expr>> binds, Expr expr) implements Expr { }
+    sealed interface Expr permits IntExpr, VarExpr, AddExpr, MultExpr, LetExpr {
+        public int eval(Deque<Map<String, Integer>> stack);
+    }
+    record IntExpr(int i) implements Expr {
+        public int eval(Deque<Map<String, Integer>> stack) { return i; }
+    }
+    record VarExpr(String str) implements Expr {
+        public int eval(Deque<Map<String, Integer>> stack) {
+            return stack.stream()
+                        .map(m -> m.get(str))
+                        .filter(Objects::nonNull)
+                        .findFirst()
+                        .orElseThrow();
+        }
+    }
+    record AddExpr(Expr x, Expr y) implements Expr {
+        public int eval(Deque<Map<String, Integer>> stack) { return x.eval(stack) + y.eval(stack); }
+    }
+    record MultExpr(Expr x, Expr y) implements Expr {
+        public int eval(Deque<Map<String, Integer>> stack) { return x.eval(stack) * y.eval(stack); }
+    }
+    record LetExpr(List<Pair<String, Expr>> binds, Expr expr) implements Expr {
+        public int eval(Deque<Map<String, Integer>> stack) {
+            Map<String, Integer> frame = new HashMap<>();
+            stack.push(frame);
+            binds.forEach(b -> frame.put(b.fst(), b.snd().eval(stack)));
+            int res = expr.eval(stack);
+            stack.pop();
+            return res;
+        }
+    }
 
     Stream<String> tokenize(String expression) {
         Pattern p = Pattern.compile("\\(|\\)|-?\\d+|\\w[\\w\\d]*");
@@ -42,19 +66,21 @@ class Solution {
             }
             case "let" -> {
                 List<Pair<String, Expr>> binds = new ArrayList<>();
-                String key = tokens.peek();
-                Expr e = parse(tokens);
+                String fst = null, snd = null;
 
                 do {
-                    Expr snd = parse(tokens);
-                    binds.add(new Pair(key, snd));
-                    key = tokens.peek();
-                    e = parse(tokens);
-                } while (!tokens.peek().equals(")"));
+                    String key = tokens.pop();
+                    Expr val = parse(tokens);
+                    binds.add(new Pair(key, val));
+                    System.out.println(binds);
+                    Iterator<String> ll = tokens.iterator();
+                    fst = ll.next();
+                    snd = ll.next();
+                } while (!fst.equals("(") && !snd.equals(")"));
 
+                Expr expr = parse(tokens);
                 tokens.pop();
-
-                yield new LetExpr(binds, e);
+                yield new LetExpr(binds, expr);
             }
             default -> throw new IllegalArgumentException("Unsupported function: " + fun);
         };
@@ -70,31 +96,10 @@ class Solution {
         };
     }
 
-    public int evalRecur(Expr expr, Deque<Map<String, Integer>> stack) {
-        return switch (expr) {
-            case IntExpr e -> e.i();
-            case VarExpr e -> stack.stream()
-                                   .map(m -> m.get(e.str()))
-                                   .filter(Objects::nonNull)
-                                   .findFirst()
-                                   .orElseThrow();
-            case AddExpr e -> evalRecur(e.x(), stack) + evalRecur(e.y(), stack);
-            case MultExpr e -> evalRecur(e.x(), stack) * evalRecur(e.y(), stack);
-            case LetExpr e -> {
-                Map<String, Integer> frame = new HashMap<>();
-                stack.push(frame);
-                e.binds.forEach(b -> frame.put(b.fst(), evalRecur(b.snd(), stack)));
-                int res = evalRecur(e.expr(), stack);
-                stack.pop();
-                yield res;
-            }
-        };
-    }
-
     public int evaluate(String expression) {
         Deque<Map<String, Integer>> stack = new ArrayDeque<>();
         Expr expr = parse(tokenize(expression).collect(Collectors.toCollection(ArrayDeque::new)));
-        return evalRecur(expr, stack);
+        return expr.eval(stack);
     }
 
     public static void main(String[] args) {
