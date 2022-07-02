@@ -72,7 +72,6 @@ class Solution {
                     String key = tokens.pop();
                     Expr val = parse(tokens);
                     binds.add(new Pair(key, val));
-                    System.out.println(binds);
                     Iterator<String> ll = tokens.iterator();
                     fst = ll.next();
                     snd = ll.next();
