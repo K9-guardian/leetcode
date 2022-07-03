@@ -14,9 +14,6 @@ class Solution {
     }
 
     int distinctSequencesRec(int[][][] memo, int pprev, int prev, int i, int n) {
-        // System.out.println(Arrays.toString(state));
-        // System.out.println(i);
-        // System.out.println();
         if (memo[pprev][prev][i] != 0)
             return memo[pprev][prev][i];
         else if (i == n)
