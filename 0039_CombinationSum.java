@@ -30,7 +30,7 @@ class Solution {
 
     public static void main(String[] args) {
         int[] candidates = {2,3,6,7};
-        Solution sc = new Solution();
-        System.out.println(sc.combinationSum(candidates, 7));
+        Solution sol = new Solution();
+        System.out.println(sol.combinationSum(candidates, 7));
     }
 }

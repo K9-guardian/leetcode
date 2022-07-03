@@ -22,7 +22,7 @@ class Solution {
     }
 
     public static void main(String[] args) {
-        Solution sc = new Solution();
-        System.out.println(sc.lengthOfLongestSubstring("abcabcbb"));
+        Solution sol = new Solution();
+        System.out.println(sol.lengthOfLongestSubstring("abcabcbb"));
     }
 }

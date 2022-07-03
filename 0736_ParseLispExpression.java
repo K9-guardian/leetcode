@@ -102,7 +102,7 @@ class Solution {
     }
 
     public static void main(String[] args) {
-        Solution sc = new Solution();
-        System.out.println(sc.evaluate("(let x 2 (mult x (let x 3 y 4 (add x y))))"));
+        Solution sol = new Solution();
+        System.out.println(sol.evaluate("(let x 2 (mult x (let x 3 y 4 (add x y))))"));
     }
 }

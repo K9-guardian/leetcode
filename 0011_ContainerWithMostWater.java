@@ -18,7 +18,7 @@ class Solution {
 
     public static void main(String[] args) {
         int[] height = {1,8,6,2,5,4,8,3,7};
-        Solution sc = new Solution();
-        System.out.println(sc.maxArea(height));
+        Solution sol = new Solution();
+        System.out.println(sol.maxArea(height));
     }
 }

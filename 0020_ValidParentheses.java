@@ -24,7 +24,7 @@ class Solution {
     }
 
     public static void main(String[] args) {
-        Solution sc = new Solution();
-        System.out.println(sc.isValid("]"));
+        Solution sol = new Solution();
+        System.out.println(sol.isValid("]"));
     }
 }

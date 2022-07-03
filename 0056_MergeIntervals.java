@@ -35,7 +35,7 @@ class Solution {
 
     public static void main(String[] args) {
         int[][] intervals = {{2,3},{4,5},{6,7},{8,9},{1,10}};
-        Solution sc = new Solution();
-        System.out.println(Arrays.deepToString(sc.merge(intervals)));
+        Solution sol = new Solution();
+        System.out.println(Arrays.deepToString(sol.merge(intervals)));
     }
 }
