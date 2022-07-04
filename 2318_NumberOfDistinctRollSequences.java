@@ -1,6 +1,8 @@
 import java.util.*;
 
 class Solution {
+    static final int MOD = 1000000007;
+
     boolean validAdjacency(int i, int j) {
         // Precomputed gcd(i, j) = 1 for 1 <= i, j = 6.
         boolean[][] adjacencies =
@@ -24,22 +26,18 @@ class Solution {
             switch (i) {
                 case 0 -> {
                     for (int j = 1; j <= 6; j++)
-                        res = (res + distinctSequencesRec(memo, j, prev, i + 1, n)) % 1000000007;
+                        res = (res + distinctSequencesRec(memo, j, prev, i + 1, n)) % MOD;
                 }
                 case 1 -> {
                     for (int j = 1; j <= 6; j++) {
-                        if (pprev != j && validAdjacency(pprev, j)) {
-                            res = (res + distinctSequencesRec(memo, pprev, j, i + 1, n))
-                                 % 1000000007;
-                        }
+                        if (pprev != j && validAdjacency(pprev, j))
+                            res = (res + distinctSequencesRec(memo, pprev, j, i + 1, n)) % MOD;
                     }
                 }
                 default -> {
                     for (int j = 1; j <= 6; j++) {
-                        if (pprev != j && prev != j && validAdjacency(prev, j)) {
-                            res = (res + distinctSequencesRec(memo, prev, j, i + 1, n))
-                                 % 1000000007;
-                        }
+                        if (pprev != j && prev != j && validAdjacency(prev, j))
+                            res = (res + distinctSequencesRec(memo, prev, j, i + 1, n)) % MOD;
                     }
                 }
             }

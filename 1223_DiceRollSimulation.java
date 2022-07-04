@@ -1,6 +1,8 @@
 import java.util.*;
 
 class Solution {
+    static final int MOD = 1000000007;
+
     int dieSimulatorRec(int[][][] memo, int[] rollMax, int prev, int cnt, int i, int n) {
         if (memo[prev][cnt][i] != 0) {
             return memo[prev][cnt][i];
@@ -12,14 +14,10 @@ class Solution {
             int res = 0;
 
             for (int j = 1; j <= 6; j++) {
-                if (j == prev && cnt > 1) {
-                    res = (res + dieSimulatorRec(memo, rollMax, j, cnt - 1, i + 1, n))
-                         % 1000000007;
-                }
-                else if (j != prev) {
-                    res = (res + dieSimulatorRec(memo, rollMax, j, rollMax[j - 1], i + 1, n))
-                         % 1000000007;
-                }
+                if (j == prev && cnt > 1)
+                    res = (res + dieSimulatorRec(memo, rollMax, j, cnt - 1, i + 1, n)) % MOD;
+                else if (j != prev)
+                    res = (res + dieSimulatorRec(memo, rollMax, j, rollMax[j - 1], i + 1, n)) % MOD;
             }
 
             memo[prev][cnt][i] = res;
