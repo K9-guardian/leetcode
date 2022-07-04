@@ -3,53 +3,41 @@ import java.util.*;
 class Solution {
     static final int MOD = 1000000007;
 
-    boolean validAdjacency(int i, int j) {
-        // Precomputed gcd(i, j) = 1 for 1 <= i, j = 6.
-        boolean[][] adjacencies =
-          {{true, true,  true,  true,  true,  true},
-           {true, false, true,  false, true,  false},
-           {true, true,  false, true,  true,  false},
-           {true, false, true,  false, true,  false},
-           {true, true,  true,  true,  false, true},
-           {true, false, false, false, true,  false}};
-        return adjacencies[i - 1][j - 1];
-    }
-
-    int distinctSequencesRec(int[][][] memo, int pprev, int prev, int i, int n) {
-        if (memo[pprev][prev][i] != 0)
-            return memo[pprev][prev][i];
-        else if (i == n)
-            return 1;
-        else {
-            int res = 0;
-
-            switch (i) {
-                case 0 -> {
-                    for (int j = 1; j <= 6; j++)
-                        res = (res + distinctSequencesRec(memo, j, prev, i + 1, n)) % MOD;
-                }
-                case 1 -> {
-                    for (int j = 1; j <= 6; j++) {
-                        if (pprev != j && validAdjacency(pprev, j))
-                            res = (res + distinctSequencesRec(memo, pprev, j, i + 1, n)) % MOD;
-                    }
-                }
-                default -> {
-                    for (int j = 1; j <= 6; j++) {
-                        if (pprev != j && prev != j && validAdjacency(prev, j))
-                            res = (res + distinctSequencesRec(memo, prev, j, i + 1, n)) % MOD;
-                    }
-                }
-            }
-
-            memo[pprev][prev][i] = res;
-            return res;
-        }
+    void arrayCopy(int[][] xs, int[][] ys) {
+        for (int i = 0; i < xs.length; i++)
+            System.arraycopy(xs[i], 0, ys[i], 0, xs[i].length);
     }
 
     public int distinctSequences(int n) {
-        int[][][] memo = new int[7][7][10001];
-        return distinctSequencesRec(memo, 0, 0, 0, n);
+        if (n == 1)
+            return 6;
+        else {
+            int[][] table = {{0, 1, 1, 1, 1, 1},
+                             {1, 0, 1, 0, 1, 0},
+                             {1, 1, 0, 1, 1, 0},
+                             {1, 0, 1, 0, 1, 0},
+                             {1, 1, 1, 1, 0, 1},
+                             {1, 0, 0, 0, 1, 0}};
+            int[][] newTable = new int[6][6];
+
+            for (int i = 2; i < n; i++) {
+                for (int j = 0; j < 6; j++) {
+                    for (int k = 0; k < 6; k++) {
+                        if (table[j][k] != 0) {
+                            for (int l = 0; l < 6; l++)
+                                if (l != j)
+                                    newTable[j][k] = (newTable[j][k] + table[k][l]) % MOD;
+                        }
+                    }
+                }
+                arrayCopy(newTable, table);
+                Arrays.stream(newTable).forEach(arr -> Arrays.fill(arr, 0));
+            }
+
+            return Arrays.stream(table)
+                         .flatMapToInt(arr -> Arrays.stream(arr))
+                         .reduce(0, (x, y) -> (x + y) % MOD);
+        }
     }
 
     public static void main(String[] args) {
