@@ -1,19 +1,19 @@
 import java.util.*;
-import java.util.function.Function;
-import java.util.stream.Collectors;
+import java.util.stream.*;
 
 class Solution {
     Map<Character, Long> frequencies(String str) {
         return str.chars()
                   .mapToObj(x -> (char) x)
-                  .collect(Collectors.groupingBy(Function.identity(), Collectors.counting()));
+                  .collect(Collectors.groupingBy(e -> e, Collectors.counting()));
     }
 
     public List<List<String>> groupAnagrams(String[] strs) {
-        return new ArrayList<List<String>>(
-            Arrays.stream(strs)
-                  .collect(Collectors.groupingBy(this::frequencies))
-                  .values());
+        return Arrays.stream(strs)
+                     .collect(Collectors.groupingBy(this::frequencies))
+                     .values()
+                     .stream()
+                     .collect(Collectors.toList());
     }
 
     public static void main(String[] args) {
