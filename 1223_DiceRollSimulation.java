@@ -32,7 +32,7 @@ class Solution {
 
     public static void main(String[] args) {
         Solution sol = new Solution();
-        int[] rollMax = {1, 1, 1, 2, 2, 3};
+        int[] rollMax = {1,1,1,2,2,3};
         System.out.println(sol.dieSimulator(3, rollMax));
     }
 }
