@@ -1,7 +1,7 @@
 class Solution {
     public ListNode mergeTwoLists(ListNode list1, ListNode list2) {
         ListNode fst = list1, snd = list2;
-        ListNode dummy = new ListNode(0, null), merged = dummy;
+        ListNode dummy = new ListNode(0), merged = dummy;
 
         while (fst != null && snd != null) {
             if (fst.val < snd.val) {
