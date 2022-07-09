@@ -3,39 +3,23 @@ import java.util.*;
 class Solution {
     public int[][] merge(int[][] intervals) {
         Arrays.sort(intervals, Arrays::compare);
+        Deque<int[]> merged = new ArrayDeque<>();
 
-        Deque<int[]> merged = Arrays.stream(intervals)
-                .parallel()
-                .collect(ArrayDeque<int[]>::new,
-                         (acc, e) -> {
-                             int[] head = acc.peekLast();
-                             if (head != null && head[1] >= e[0]) {
-                                 acc.removeLast();
-                                 acc.addLast(new int[] {head[0], Math.max(head[1], e[1])});
-                             } else
-                                 acc.addLast(e);
-                         },
-                         (acc1, acc2) -> {
-                             int[] last = acc1.peekLast();
-                             int[] first = acc2.peekFirst();
-                             while (first != null && last != null && last[1] >= first[0]) {
-                                 acc1.removeLast();
-                                 acc1.addLast(new int[] {last[0], Math.max(last[1], first[1])});
-                                 acc2.removeFirst();
-
-                                 last = acc1.peekLast();
-                                 first = acc2.peekFirst();
-                             }
-                             acc1.addAll(acc2);
-                         }
-                        );
+        for (int[] range : intervals) {
+            int[] head = merged.peek();
+            if (head != null && head[1] >= range[0]) {
+                merged.pop();
+                merged.push(new int[] { head[0], Math.max(head[1], range[1]) });
+            } else
+                merged.push(range);
+        }
 
         return merged.toArray(new int[merged.size()][]);
     }
 
     public static void main(String[] args) {
-        int[][] intervals = {{2,3},{4,5},{6,7},{8,9},{1,10}};
         Solution sol = new Solution();
+        int[][] intervals = {{2,3},{4,5},{6,7},{8,9},{1,10}};
         System.out.println(Arrays.deepToString(sol.merge(intervals)));
     }
 }
