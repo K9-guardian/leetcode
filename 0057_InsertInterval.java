@@ -7,32 +7,38 @@ class Solution {
             return new int[][] { newInterval };
         }
         else {
-            List<int[]> result = Arrays.stream(intervals).collect(Collectors.toList());
+            Deque<int[]> lst = new ArrayDeque<>();
 
             // 2 pass solution for simplicity.
             // First, insert newInterval right before range[0] > newInterval[0].
-            for (int i = 0; i <= result.size(); i++) {
-                if (i == result.size()) {
-                    result.add(newInterval);
-                    break;
+            for (int i = 0; i <= intervals.length; i++) {
+                if (i == intervals.length) {
+                    lst.add(newInterval);
                 }
-                else if (result.get(i)[0] > newInterval[0]) {
-                    result.add(i, newInterval);
-                    break;
+                else if (intervals[i][0] > newInterval[0]) {
+                    lst.add(newInterval);
+                    lst.add(intervals[i]);
+                }
+                else {
+                    lst.add(intervals[i]);
                 }
             }
 
-            // Next, scan over every consecutive pair and resolve overlaps.
-            for (int i = 0; i < result.size() - 1; i++) {
-                int[] left = result.get(i);
-                int[] right = result.get(i + 1);
+            Deque<int[]> result = new ArrayDeque<>();
+            result.addLast(lst.getFirst());
+            lst.removeFirst();
 
-                if (left[1] >= right[0]) {
-                    int[] range = new int[] { left[0], Math.max(left[1], right[1]) };
-                    result.remove(i);
-                    result.remove(i);
-                    result.add(i, range);
-                    i--;
+            // Next, scan over every interval and resolve conflicts while adding.
+            for (int[] range : lst) {
+                int[] prev = result.peekLast();
+
+                if (prev[1] >= range[0]) {
+                    int[] merge = new int[] { prev[0], Math.max(prev[1], range[1]) };
+                    result.removeLast();
+                    result.addLast(merge);
+                }
+                else {
+                    result.addLast(range);
                 }
             }
 
