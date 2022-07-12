@@ -4,12 +4,10 @@ class Solution {
     static final int MOD = 1000000007;
 
     int dieSimulatorRec(int[][][] memo, int[] rollMax, int prev, int cnt, int i, int n) {
-        if (memo[prev][cnt][i] != 0) {
+        if (memo[prev][cnt][i] != 0)
             return memo[prev][cnt][i];
-        }
-        else if (i == n) {
+        else if (i == n)
             return 1;
-        }
         else {
             int res = 0;
 

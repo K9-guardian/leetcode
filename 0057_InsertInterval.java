@@ -1,54 +1,32 @@
 import java.util.*;
-import java.util.stream.*;
 
 class Solution {
     public int[][] insert(int[][] intervals, int[] newInterval) {
-        if (intervals.length == 0) {
-            return new int[][] { newInterval };
-        }
-        else {
-            Deque<int[]> lst = new ArrayDeque<>();
+        int i = Arrays.binarySearch(intervals, newInterval, (xs, ys) -> xs[1] - ys[0]);
+        int j = Arrays.binarySearch(intervals, newInterval, (xs, ys) -> xs[0] - ys[1]);
 
-            // 2 pass solution for simplicity.
-            // First, insert newInterval right before range[0] > newInterval[0].
-            for (int i = 0; i <= intervals.length; i++) {
-                if (i == intervals.length) {
-                    lst.add(newInterval);
-                }
-                else if (intervals[i][0] > newInterval[0]) {
-                    lst.add(newInterval);
-                    lst.add(intervals[i]);
-                }
-                else {
-                    lst.add(intervals[i]);
-                }
-            }
+        int fst = i < 0 ? ~i : i;
+        int snd = j < 0 ? ~j : j;
 
-            Deque<int[]> result = new ArrayDeque<>();
-            result.addLast(lst.getFirst());
-            lst.removeFirst();
+        int[][] merged = new int[intervals.length - (snd - fst) + (j < 0 ? 1 : 0)][2];
+        System.arraycopy(intervals, 0, merged, 0, fst);
+        System.arraycopy(intervals, j < 0 ? ~j : j + 1, merged, fst + 1, merged.length - (fst + 1));
 
-            // Next, scan over every interval and resolve conflicts while adding.
-            for (int[] range : lst) {
-                int[] prev = result.peekLast();
+        int lower = Math.min(newInterval[0],
+                             fst == intervals.length ? Integer.MAX_VALUE : intervals[fst][0]);
+        int upper = Math.max(newInterval[1],
+                             j < 0 && snd == 0
+                           ? Integer.MIN_VALUE
+                           : intervals[j < 0 ? snd - 1 : snd][1]);
 
-                if (prev[1] >= range[0]) {
-                    int[] merge = new int[] { prev[0], Math.max(prev[1], range[1]) };
-                    result.removeLast();
-                    result.addLast(merge);
-                }
-                else {
-                    result.addLast(range);
-                }
-            }
+        merged[fst] = new int[] { lower, upper };
 
-            return result.toArray(new int[result.size()][]);
-        }
+        return merged;
     }
 
     public static void main(String[] args) {
-        int[][] intervals = {{1,2},{3,5},{6,7},{8,10},{12,16}};
-        int[] newInterval = {4,8};
+        int[][] intervals = {{1,5}};
+        int[] newInterval = {0,1};
         Solution sc = new Solution();
         System.out.println(Arrays.deepToString(sc.insert(intervals, newInterval)));
     }
