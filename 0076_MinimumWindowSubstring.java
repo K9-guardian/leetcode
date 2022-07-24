@@ -7,13 +7,13 @@ class Solution {
             .mapToObj(x -> (char) x)
             .collect(Collectors.groupingBy(e -> e, Collectors.counting()));
 
-        int fst = 0, snd = 0;
+        int tort = 0, hare = 0;
         int formed = 0, required = uniq.size();
         Map<Character, Long> window = new HashMap<>();
         int[] min = {Integer.MAX_VALUE, 0, 0}; // length, left idx, right idx
 
-        while (snd != s.length()) {
-            char c = s.charAt(snd);
+        while (hare != s.length()) {
+            char c = s.charAt(hare);
 
             if (uniq.containsKey(c)) {
                 window.merge(c, 1L, (x, y) -> x + y);
@@ -22,13 +22,13 @@ class Solution {
                     formed++;
             }
 
-            while (fst <= snd && formed == required) {
-                char k = s.charAt(fst);
+            while (tort <= hare && formed == required) {
+                char k = s.charAt(tort);
 
-                if (snd - fst + 1 < min[0]) {
-                    min[0] = snd - fst + 1;
-                    min[1] = fst;
-                    min[2] = snd;
+                if (hare - tort + 1 < min[0]) {
+                    min[0] = hare - tort + 1;
+                    min[1] = tort;
+                    min[2] = hare;
                 }
 
                 if (uniq.containsKey(k)) {
@@ -38,10 +38,10 @@ class Solution {
                         formed--;
                 }
 
-                fst++;
+                tort++;
             }
 
-            snd++;
+            hare++;
         }
 
         return min[0] == Integer.MAX_VALUE ? "" : s.substring(min[1], min[2] + 1);
