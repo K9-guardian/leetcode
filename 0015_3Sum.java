@@ -2,17 +2,17 @@ import java.util.*;
 
 class Solution {
     public List<List<Integer>> threeSum(int[] nums) {
-        if (nums.length <= 2) return new ArrayList<>();
+        if (nums.length <= 2) return List.of();
 
         Arrays.sort(nums);
-        Set<List<Integer>> result = new HashSet<>();
+        Set<List<Integer>> res = new HashSet<>();
 
         int i = 0;
         while (i < nums.length - 2 && nums[i] <= 0) {
             int start = i + 1, end = nums.length - 1;
             while (start < end) {
                 if (nums[start] + nums[end] == -1 * nums[i]) {
-                    result.add(Arrays.asList(nums[i], nums[start], nums[end]));
+                    res.add(Arrays.asList(nums[i], nums[start], nums[end]));
                     start++;
                     end--;
                 } else if (nums[start] + nums[end] > -1 * nums[i])
@@ -23,7 +23,7 @@ class Solution {
             i++;
         }
 
-        return List.copyOf(result);
+        return List.copyOf(res);
     }
 
     public static void main(String[] args) {

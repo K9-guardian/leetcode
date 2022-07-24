@@ -4,7 +4,7 @@ class Solution {
     public List<List<Integer>> combinationSum(int[] candidates, int target) {
         record DFSElement(int i, int total, List<Integer> nums) { }
 
-        List<List<Integer>> result = new ArrayList<>();
+        List<List<Integer>> res = new ArrayList<>();
         Deque<DFSElement> stack = new ArrayDeque<>();
         stack.push(new DFSElement(0, 0, new ArrayList<>()));
 
@@ -12,7 +12,7 @@ class Solution {
             DFSElement e = stack.pop();
 
             if (e.total() == target) {
-                result.add(new ArrayList<>(e.nums()));
+                res.add(new ArrayList<>(e.nums()));
                 continue;
             }
             if (e.i() >= candidates.length || e.total() > target)
@@ -25,7 +25,7 @@ class Solution {
             stack.push(new DFSElement(e.i(), e.total() + candidates[e.i()], s2));
         }
 
-        return result;
+        return res;
     }
 
     public static void main(String[] args) {

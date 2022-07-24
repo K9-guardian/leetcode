@@ -3,15 +3,15 @@ import java.util.*;
 class Solution {
     public int[] twoSum(int[] nums, int target) {
         Map<Integer, Integer> m = new HashMap<>();
-        int[] result = null;
+        int[] res = null;
 
         for (int i = 0; i < nums.length; i++)
             if (m.containsKey(target - nums[i]))
-                result = new int[]{i, m.get(target - nums[i])};
+                res = new int[]{i, m.get(target - nums[i])};
             else
                 m.put(nums[i], i);
 
-        return result;
+        return res;
     }
 
     public static void main(String[] args) {
