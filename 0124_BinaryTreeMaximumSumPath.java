@@ -5,7 +5,7 @@ class Solution {
         return res[0];
     }
 
-    public int maxPathSumRec(TreeNode node, int[] res) {
+    int maxPathSumRec(TreeNode node, int[] res) {
         if (node == null) return 0;
 
         int left = node.val + maxPathSumRec(node.left, res);

@@ -9,7 +9,8 @@ class Solution {
                 case '(', '[', '{' -> stack.push(switch (s.charAt(i)) {
                     case '(' -> ')';
                     case '[' -> ']';
-                    default -> '}';
+                    case '{' -> '}';
+                    default -> throw new InputMismatchException();
                 });
                 case ')', ']', '}' -> {
                     if (!stack.isEmpty() && stack.peek() == s.charAt(i))

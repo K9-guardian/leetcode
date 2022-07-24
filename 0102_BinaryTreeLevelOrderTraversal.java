@@ -11,7 +11,7 @@ class Solution {
         queue.add(new Cell(root, 0));
 
         while (!queue.isEmpty()) {
-            Cell cell = queue.pop();
+            Cell cell = queue.poll();
             TreeNode node = cell.node();
             int level = cell.level();
 
