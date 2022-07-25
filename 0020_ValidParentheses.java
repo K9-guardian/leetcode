@@ -10,7 +10,8 @@ class Solution {
                     case '(' -> ')';
                     case '[' -> ']';
                     case '{' -> '}';
-                    default -> throw new InputMismatchException();
+                    default -> throw new
+                        IllegalArgumentException("Input contains non bracketed characters");
                 });
                 case ')', ']', '}' -> {
                     if (!stack.isEmpty() && stack.peek() == s.charAt(i))

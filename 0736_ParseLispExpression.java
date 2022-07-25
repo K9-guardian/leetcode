@@ -14,10 +14,10 @@ class Solution {
     record VarExpr(String str) implements Expr {
         public int eval(Deque<Map<String, Integer>> stack) {
             return stack.stream()
-                        .map(m -> m.get(str))
-                        .filter(Objects::nonNull)
-                        .findFirst()
-                        .orElseThrow();
+                .map(m -> m.get(str))
+                .filter(Objects::nonNull)
+                .findFirst()
+                .orElseThrow(() -> throw new IllegalArgumentException("Var not defined: " + str));
         }
     }
     record AddExpr(Expr x, Expr y) implements Expr {
@@ -90,7 +90,7 @@ class Solution {
 
         return switch (str) {
             case "(" -> parseSeq(tokens);
-            case ")" -> throw new IllegalArgumentException("Input has unmatched parentheses.");
+            case ")" -> throw new IllegalArgumentException("Input has unmatched parentheses");
             default -> parseAtom(str);
         };
     }
