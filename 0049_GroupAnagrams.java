@@ -13,7 +13,7 @@ class Solution {
                      .collect(Collectors.groupingBy(this::frequencies))
                      .values()
                      .stream()
-                     .collect(Collectors.toList());
+                     .toList();
     }
 
     public static void main(String[] args) {
