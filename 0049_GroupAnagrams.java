@@ -2,10 +2,12 @@ import java.util.*;
 import java.util.stream.*;
 
 class Solution {
-    Map<Character, Long> frequencies(String str) {
-        return str.chars()
-                  .mapToObj(x -> (char) x)
-                  .collect(Collectors.groupingBy(e -> e, Collectors.counting()));
+    List<Integer> frequencies(String str) {
+        int[] freqs = new int[26];
+
+        str.chars().map(x -> x - 97).forEach(x -> freqs[x]++);
+
+        return Arrays.stream(freqs).boxed().toList();
     }
 
     public List<List<String>> groupAnagrams(String[] strs) {
