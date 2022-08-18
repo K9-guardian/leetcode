@@ -3,7 +3,7 @@ import java.util.*;
 class Solution {
     public int numDecodings(String s) {
         int[] memo = new int[s.length() + 1];
-        return s.length() == 0 ? 0 : numDecodingsRec(memo, s, 0);
+        return s.isEmpty() ? 0 : numDecodingsRec(memo, s, 0);
     }
 
     int numDecodingsRec(int[] memo, String s, int i) {
