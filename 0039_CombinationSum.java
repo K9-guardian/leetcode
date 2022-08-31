@@ -1,7 +1,7 @@
 import java.util.*;
 import java.util.function.*;
 
-public class Solution {
+class Solution {
     static abstract class ConsList<E> extends AbstractSequentialList<E> {
         public abstract <C> C match(C n, BiFunction<E, ConsList<E>, C> c);
 
