@@ -1,4 +1,4 @@
-public class Solution {
+class Solution {
     // https://en.wikipedia.org/wiki/Cycle_detection#Floyd's_tortoise_and_hare
     public boolean hasCycle(ListNode head) {
         if (head == null || head.next == null) return false;
