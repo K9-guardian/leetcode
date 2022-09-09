@@ -3,9 +3,7 @@ import java.util.regex.*;
 
 class Solution {
     public boolean wordBreak(String s, List<String> wordDict) {
-        Pattern p = Pattern.compile("(?:" + String.join("|", wordDict) + ")+");
-        Matcher m = p.matcher(s);
-        return m.matches();
+        return s.matches("(?:" + String.join("|", wordDict) + ")+");
     }
 
     public static void main(String[] args) {
