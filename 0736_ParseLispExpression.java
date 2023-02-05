@@ -17,7 +17,7 @@ class Solution {
                 .map(m -> m.get(str))
                 .filter(Objects::nonNull)
                 .findFirst()
-                .orElseThrow(() -> throw new IllegalArgumentException("Var not defined: " + str));
+                .orElseThrow(() -> { throw new IllegalArgumentException("Var not defined: " + str); });
         }
     }
     record AddExpr(Expr x, Expr y) implements Expr {
@@ -71,7 +71,7 @@ class Solution {
                 do {
                     String key = tokens.pop();
                     Expr val = parse(tokens);
-                    binds.add(new Pair(key, val));
+                    binds.add(new Pair<>(key, val));
                     Iterator<String> ll = tokens.iterator();
                     fst = ll.next();
                     snd = ll.next();
