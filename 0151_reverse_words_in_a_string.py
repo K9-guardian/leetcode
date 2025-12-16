@@ -1,3 +1,4 @@
+#!/usr/bin/env python
 class Solution(object):
     def reverseWords(self, s: str) -> str:
         return " ".join(reversed(s.split()))

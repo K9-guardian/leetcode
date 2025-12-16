@@ -1,3 +1,4 @@
+#!/usr/bin/env python
 class Solution(object):
     def mergeAlternately(self, word1: str, word2: str) -> str:
         interleaved = ''.join([c for p in zip(word1, word2) for c in p])
