@@ -1,12 +1,8 @@
+from typing import List
 import heapq
 
 class Solution(object):
-    def findKthLargest(self, nums, k):
-        """
-        :type nums: List[int]
-        :type k: int
-        :rtype: int
-        """
+    def findKthLargest(self, nums: List[int], k: int) -> int:
         # Add all nums to a min heap
         # Iteratively remove k elements - kth element removed will be our kth largest
         heapq.heapify(nums)

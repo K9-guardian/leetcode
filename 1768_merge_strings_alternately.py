@@ -1,10 +1,5 @@
 class Solution(object):
-    def mergeAlternately(self, word1, word2):
-        """
-        :type word1: str
-        :type word2: str
-        :rtype: str
-        """
+    def mergeAlternately(self, word1: str, word2: str) -> str:
         interleaved = ''.join([c for p in zip(word1, word2) for c in p])
         if len(word1) > len(word2):
             interleaved = interleaved + word1[len(word2):]

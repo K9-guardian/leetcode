@@ -1,9 +1,7 @@
+from typing import List
+
 class Solution(object):
-    def productExceptSelf(self, nums):
-        """
-        :type nums: List[int]
-        :rtype: List[int]
-        """
+    def productExceptSelf(self, nums: List[int]) -> List[int]:
         # Create 2 new arrays pre and suf
         # pre[i] = pre[i - 1] * a[i - 1]
         # suf[i] = suf[i + 1] * a[i + 1]

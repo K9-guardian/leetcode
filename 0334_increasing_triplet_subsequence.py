@@ -1,9 +1,7 @@
+from typing import List
+
 class Solution(object):
-    def increasingTriplet(self, nums):
-        """
-        :type nums: List[int]
-        :rtype: bool
-        """
+    def increasingTriplet(self, nums: List[int]) -> bool:
         # Start with min1, min2 = infinity
         # Iterate over nums - we then replace min1, min2 with nums values accordingly
         # If we can't find such a value, then we must have found a triplet subsequence
