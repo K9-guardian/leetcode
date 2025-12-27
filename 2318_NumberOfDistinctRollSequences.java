@@ -5,7 +5,7 @@ class Solution {
 
     void deepArrayCopy(int[][] xs, int[][] ys) {
         for (int i = 0; i < xs.length; i++)
-            System.deepArrayCopy(xs[i], 0, ys[i], 0, xs[i].length);
+            System.arraycopy(xs[i], 0, ys[i], 0, xs[i].length);
     }
 
     public int distinctSequences(int n) {

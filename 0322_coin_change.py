@@ -6,7 +6,6 @@ class Solution:
     def memoCoinChange(self, memo, coins, amount) -> float:
         if memo[amount] is not None:
             return memo[amount]
-
         if amount == 0:
             return 0
         res = min([math.inf]
