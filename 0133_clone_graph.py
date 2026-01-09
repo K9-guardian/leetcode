@@ -26,7 +26,7 @@ class Solution:
         adjacency_matrix = [[False] * 101 for _ in range(101)]
         self.dfs(node, visited, adjacency_matrix)
 
-        nodes = [None] * (101)
+        nodes = [None] * 101
         for i in range(len(visited)):
             if visited[i]:
                 nodes[i] = Node(i)
